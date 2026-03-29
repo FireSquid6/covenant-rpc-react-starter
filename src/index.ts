@@ -1,11 +1,18 @@
 import { serve } from "bun";
 import index from "./frontend/index.html";
+import { covenantServer } from "./server";
 
 const server = serve({
   routes: {
-    // Serve index.html for all unmatched routes.
+    // handle the request with covenant 
+    "/api/covenant": (req) => covenantServer.handle(req),
+
+    // serve our index html for all other routes
     "/*": index,
   },
+
+  // this is needed to make sidekick work
+  websocket: covenantServer.getWebsocket(),
 
   development: process.env.NODE_ENV !== "production" && {
     // Enable browser hot reloading in development
