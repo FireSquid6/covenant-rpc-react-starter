@@ -6,6 +6,7 @@ const server = serve({
   routes: {
     // handle the request with covenant 
     "/api/covenant": (req) => covenantServer.handle(req),
+    "/socket": (req, s) => covenantServer.handleSocket(req, s),
 
     // serve our index html for all other routes
     "/*": index,
